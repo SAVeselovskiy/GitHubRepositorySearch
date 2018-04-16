@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scheme
+   version = "1.3">
+   <BuildAction>
+      <BuildActionEntries>
+         <BuildActionEntry
+            buildForRunning = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "E52F0C40208500E00094DAB3"
+               BuildableName = "GitHubRepositorySearch.app"
+               BlueprintName = "GitHubRepositorySearch"
+               ReferencedContainer = "container:GitHubRepositorySearch.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+      </BuildActionEntries>
+   </BuildAction>
+   <LaunchAction
+      useCustomWorkingDirectory = "NO"
+      buildConfiguration = "Debug"
+      allowLocationSimulation = "YES">
+      <BuildableProductRunnable>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "E52F0C40208500E00094DAB3"
+            BuildableName = "GitHubRepositorySearch.app"
+            BlueprintName = "GitHubRepositorySearch"
+            ReferencedContainer = "container:GitHubRepositorySearch.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
+   </LaunchAction>
+</Scheme>
