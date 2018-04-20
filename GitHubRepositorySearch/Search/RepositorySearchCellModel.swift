@@ -42,6 +42,7 @@ class RepositorySearchCellModel {
                         let image = UIImage(data: imageData)
                         self?.avatar = image
                         DispatchQueue.main.async {
+                            //TODO: Check if cell eas reused or subclass UIImageView for download image and reset operation on prepareForReuse
                             cell?.repositoryView?.avatarImageView.image = image
                         }
                     }
