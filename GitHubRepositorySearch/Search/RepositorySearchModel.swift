@@ -8,27 +8,18 @@
 
 import Foundation
 
-class RepositrySearchModelImplementation: RepositorySearchModel {
+class RepositrySearchModel: RepositorySearchModelProtocol {
 
     func search(query: String, success: @escaping (([GithubRepository]) -> ()), failure: @escaping ((Error?) -> ())) {
-        provider.loadSearchResults(for: query, success: { [weak self](result) in
-            self?.repositories = result.items
-            self?.totalCount = result.totalCount
+        provider.loadSearchResults(for: query, success: { (result) in
             success(result.items)
         }) { (error) in
             failure(error)
         }
     }
     
-    
-    private var repositories: [GithubRepository] = []
     private lazy var provider: GitHubApiProvider = {
        return GitHubApiProvider()
     }()
-    var totalCount = 0
-//    weak var delegate: RepositorySearchModelDelegate?
     
-    func numberOfLoadedItems() -> Int {
-        return self.totalCount
-    }
 }

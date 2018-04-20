@@ -9,10 +9,8 @@
 import XCTest
 
 class GitHubRepositorySearchTests: XCTestCase {
-    var provider: GitHubApiProvider?
     override func setUp() {
         super.setUp()
-        self.provider = GitHubApiProvider()
         
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
@@ -23,16 +21,7 @@ class GitHubRepositorySearchTests: XCTestCase {
     }
     
     func testExample() {
-        provider?.loadSearchResults(for: "Tag Cloud iOS", success: { (results) in
-            assert(false)
-        }, failure: { (error) in
-            var loadingError = error
-            if error == nil {
-                loadingError = NSError(domain: "VSSearchList", code: 500, userInfo: nil)
-            }
-            print(loadingError?.localizedDescription as Any)
-            assert(true)
-        })
+
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }

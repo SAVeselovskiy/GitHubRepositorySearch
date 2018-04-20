@@ -47,7 +47,11 @@ class BackendProvider {
         }
         var request = URLRequest(url: url)
         request.httpMethod = method.rawValue
+        print("\n\n\(request.debugDescription)\n\n")
         let task = session.dataTask(with: request) { [weak self](data, response, error) in
+            if let response = response {
+                print("\n\n\(response.debugDescription)\n\n")
+            }
             if let error = error {
                 DispatchQueue.main.async {
                     failure(error)

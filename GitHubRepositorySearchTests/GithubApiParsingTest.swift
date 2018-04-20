@@ -143,9 +143,8 @@ class GithubApiParsingTest: XCTestCase {
     
     func testParsing() {
         if let body = self.response {
-            let expectation = XCTestExpectation(description: "Download test search list")
             let successBlock: (GithubSearchResult)->() = {_ in
-                expectation.fulfill()
+                
             }
             provider?.decodeJSON(data: body, success: successBlock, failure: { (error) in
                 var loadingError = error
@@ -153,10 +152,8 @@ class GithubApiParsingTest: XCTestCase {
                     loadingError = NSError(domain: "VSSearchList", code: 500, userInfo: nil)
                 }
                 print(loadingError?.localizedDescription as Any)
-                expectation.fulfill()
                 XCTFail()
             })
-            wait(for: [expectation], timeout: 15.0)
         }
         else {
             XCTFail()
