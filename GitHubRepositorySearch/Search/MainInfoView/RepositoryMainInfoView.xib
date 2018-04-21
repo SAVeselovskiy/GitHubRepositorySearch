@@ -17,7 +17,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cee-Zv-Krt">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cee-Zv-Krt" customClass="DownloadImageView" customModule="GitHubRepositorySearch" customModuleProvider="target">
                     <rect key="frame" x="10" y="10" width="50" height="50"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="2y1-oi-eMS"/>
@@ -54,7 +54,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
-                <outlet property="avatarImageView" destination="cee-Zv-Krt" id="JzM-5X-nxU"/>
+                <outlet property="avatarImageView" destination="cee-Zv-Krt" id="XUE-wH-Gca"/>
                 <outlet property="descriptionLabel" destination="fVQ-wG-iGK" id="1y7-77-Tr1"/>
                 <outlet property="titleLabel" destination="ISU-a3-ihq" id="zrq-rj-ORw"/>
             </connections>

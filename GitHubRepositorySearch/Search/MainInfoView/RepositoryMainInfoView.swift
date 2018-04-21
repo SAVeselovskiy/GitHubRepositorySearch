@@ -10,9 +10,16 @@ import UIKit
 
 class RepositoryMainInfoView: UIView {
 
-    @IBOutlet weak var avatarImageView: UIImageView!
+    @IBOutlet var contentView: UIView!
+    
+    @IBOutlet weak var avatarImageView: DownloadImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.

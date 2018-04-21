@@ -11,6 +11,11 @@ import UIKit
 class RepositorySearchCell: UITableViewCell {
     var repositoryView: RepositoryMainInfoView?
 
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.repositoryView?.avatarImageView.stopOperation()
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -31,7 +36,7 @@ class RepositorySearchCell: UITableViewCell {
     }
     
     func commonInit() {
-        let view = Bundle.main.loadNibNamed("RepositoryMainInfoView", owner: self, options: nil)?[0] as? UIView
+        let view = Bundle.main.loadNibNamed("RepositoryMainInfoView", owner: nil, options: nil)?[0] as? UIView
         if let repositoryView = view as? RepositoryMainInfoView{
             repositoryView.translatesAutoresizingMaskIntoConstraints = false
             contentView.addSubview(repositoryView)
