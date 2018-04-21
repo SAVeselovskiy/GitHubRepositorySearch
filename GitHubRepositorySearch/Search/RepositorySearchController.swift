@@ -115,8 +115,8 @@ extension RepositorySearchController: UITableViewDataSource {
 extension RepositorySearchController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DetailInfoViewController")
-        self.navigationController?.pushViewController(vc, animated: true)
+        let controller = RepositoryInfoController.instantiateInfoController(with: nil, mainInfoModel: cellsModels[indexPath.row])
+        self.navigationController?.pushViewController(controller, animated: true)
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {

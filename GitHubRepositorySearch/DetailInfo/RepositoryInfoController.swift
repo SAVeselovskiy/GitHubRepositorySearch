@@ -13,17 +13,21 @@ class RepositoryInfoController: UIViewController {
     var repositoryInfo: GithubRepository?
     var mainInfoModel: RepositorySearchCellModel?
     
-    static func instantiateInfoController(with repoInfo: GithubRepository, mainInfoModel: RepositorySearchCellModel) {
+    static func instantiateInfoController(with repoInfo: GithubRepository?, mainInfoModel: RepositorySearchCellModel?) -> UIViewController {
         let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DetailInfoViewController")
         if let repositoryController = controller as? RepositoryInfoController {
             repositoryController.repositoryInfo = repoInfo
             repositoryController.mainInfoModel = mainInfoModel
         }
+        return controller
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         infoView.layer.cornerRadius = 8.0
+        if let infoModel = mainInfoModel {
+            infoView.fill(with: infoModel)
+        }
         // Do any additional setup after loading the view.
         
     }
