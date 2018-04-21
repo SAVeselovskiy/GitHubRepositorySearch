@@ -10,16 +10,21 @@ import UIKit
 
 class DownloadImageView: UIImageView {
     var loadOperation: Operation?
+    static let imageSize = 50.0
     
     func stopOperation() {
         self.loadOperation?.cancel()
     }
     
-    func downloadImage(url: URL, completion: @escaping (UIImage?) -> ()){
+    func downloadImage(url: URL, rounded: Bool, completion: @escaping (UIImage?) -> ()){
         self.loadOperation = ImageDownloadOperation(url: url, completion: { (loadedImage, error) in
+            var resultImage = loadedImage
+            if rounded {
+               resultImage = loadedImage?.roundedImage(cornerRadius: DownloadImageView.imageSize/2)
+            }
             DispatchQueue.main.async { [weak self] in
-                self?.image = loadedImage
-                completion(loadedImage)
+                self?.image = resultImage
+                completion(resultImage)
             }
         })
         DispatchQueue.global(qos: .background).async { [weak self] in
@@ -53,7 +58,8 @@ class ImageDownloadOperation: Operation {
             do {
                 let data = try Data(contentsOf: imageUrl)
                 let image = UIImage(data: data)
-                let resizedAvatar = image?.resizedImage(newSize: CGSize(width: 50, height: 50))
+                let resizedAvatar = image?.resizedImage(newSize: CGSize(width: DownloadImageView.imageSize,
+                                                                        height: DownloadImageView.imageSize))
                 completion(resizedAvatar, nil)
             } catch {
                 completion(nil, error)

@@ -18,13 +18,11 @@ class RepositorySearchCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
         
     }
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        // code common to all your cells goes here
         if repositoryView == nil {
             commonInit()
         }

@@ -10,7 +10,7 @@ import UIKit
 
 class RepositorySearchCellModel {
     let repository: GithubRepository
-    var avatar: UIImage? //TODO: need store only thumbnail, not full resolution image
+    var avatar: UIImage? //Stores thumbnail 50x50
     let keywords: [String]
 
     init(repository: GithubRepository, keywords: [String]) {
@@ -28,18 +28,6 @@ class RepositorySearchCellModel {
     
     private lazy var placeholderImage: UIImage = #imageLiteral(resourceName: "user_placeholder")
     func fill(cell: RepositorySearchCell) {
-        cell.repositoryView?.titleLabel.setText(repository.name, keywords: self.keywords)//.text = repository.name
-        cell.repositoryView?.descriptionLabel.setText(repository.description, keywords: self.keywords)//text = repository.description
-        cell.repositoryView?.avatarImageView.image = placeholderImage
-        if let avatarImage = avatar {
-            cell.repositoryView?.avatarImageView.image = avatarImage
-        }
-        else {
-                if let avatarUrlString = self.repository.owner.avatarUrl, let avatarUrl = URL(string: avatarUrlString) {
-                    cell.repositoryView?.avatarImageView.downloadImage(url: avatarUrl, completion: { (image) in
-                        self.avatar = image
-                    })
-            }
-        }
+        cell.repositoryView?.fill(with: self, highlightWords: true)
     }
 }

@@ -34,6 +34,7 @@
 		E5DBF746208B50EE00C510F4 /* UIImageView+ImageDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DBF745208B50EE00C510F4 /* UIImageView+ImageDownload.swift */; };
 		E5DBF748208B894800C510F4 /* SelectKeywordLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DBF747208B894800C510F4 /* SelectKeywordLabel.swift */; };
 		E5DBF74F208BB50000C510F4 /* RepositoryInfoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DBF74E208BB50000C510F4 /* RepositoryInfoController.swift */; };
+		E5DBF752208BF62B00C510F4 /* RoundedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DBF751208BF62B00C510F4 /* RoundedImage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +75,7 @@
 		E5DBF745208B50EE00C510F4 /* UIImageView+ImageDownload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+ImageDownload.swift"; sourceTree = "<group>"; };
 		E5DBF747208B894800C510F4 /* SelectKeywordLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectKeywordLabel.swift; sourceTree = "<group>"; };
 		E5DBF74E208BB50000C510F4 /* RepositoryInfoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryInfoController.swift; sourceTree = "<group>"; };
+		E5DBF751208BF62B00C510F4 /* RoundedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedImage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,6 +187,7 @@
 			children = (
 				E5DBF745208B50EE00C510F4 /* UIImageView+ImageDownload.swift */,
 				E5DBF747208B894800C510F4 /* SelectKeywordLabel.swift */,
+				E5DBF751208BF62B00C510F4 /* RoundedImage.swift */,
 			);
 			path = "UIKit support";
 			sourceTree = "<group>";
@@ -320,6 +323,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5DBF742208A34C400C510F4 /* VSSearchBar.swift in Sources */,
+				E5DBF752208BF62B00C510F4 /* RoundedImage.swift in Sources */,
 				E56DA71A2087E1DA00C27E0F /* RepositorySearchController.swift in Sources */,
 				E5DBF744208A3DE300C510F4 /* RepositorySearchView.swift in Sources */,
 				E56B45C3208735FE00FE53A1 /* GitHubApiProvider.swift in Sources */,

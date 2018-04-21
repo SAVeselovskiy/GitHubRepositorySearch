@@ -105,7 +105,6 @@ extension RepositorySearchController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "RepositoryCell", for: indexPath)
         if let repositoryCell = cell as? RepositorySearchCell {
-            //bind data
             cellsModels[indexPath.row].fill(cell: repositoryCell)
         }
         return cell

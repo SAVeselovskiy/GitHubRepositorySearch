@@ -26,7 +26,7 @@ class RepositoryInfoController: UIViewController {
         super.viewDidLoad()
         infoView.layer.cornerRadius = 8.0
         if let infoModel = mainInfoModel {
-            infoView.fill(with: infoModel)
+            infoView.fill(with: infoModel, highlightWords: false)
         }
         // Do any additional setup after loading the view.
         

@@ -20,7 +20,14 @@ protocol Parsable {
     func parse(_ map: [String: Any])
 }
 
-class BackendProvider {
+protocol ServerProvider {
+    init(_ hostName: String?)
+    func executeRecuest<T: Decodable>(path: String, queryItems: [URLQueryItem], method: HttpMethod,
+                                      success: @escaping((T)->()),
+                                      failure: @escaping((Error?)->()))
+}
+
+class BackendProvider: ServerProvider {
     private static let defaultHost = "https://api.github.com"
     let hostName: String
     private lazy var session: URLSession = {
@@ -29,14 +36,17 @@ class BackendProvider {
         return URLSession(configuration: configuration)
     }()
     
-    init(_ hostName: String? = BackendProvider.defaultHost) {
+    required init(_ hostName: String? = BackendProvider.defaultHost) {
         self.hostName = hostName ?? BackendProvider.defaultHost
     }
     
-    func executeRecuest<T: Decodable>(query: String, method: HttpMethod,
+    func executeRecuest<T: Decodable>(path: String, queryItems: [URLQueryItem], method: HttpMethod,
                         success: @escaping((T)->()),
                         failure: @escaping((Error?)->())) {
-        guard let url = URL(string: hostName + query) else {
+        var urlComponents = URLComponents(string: self.hostName)
+        urlComponents?.path = path
+        urlComponents?.queryItems = queryItems
+        guard let url = urlComponents?.url else {
             let clientError = NSError(domain: "VSNetworkDomain",
                                       code: -101,
                                       userInfo: [NSLocalizedDescriptionKey : NSLocalizedString("Incorrect URL address",
@@ -44,6 +54,7 @@ class BackendProvider {
             failure(clientError)
             return
         }
+        
         var request = URLRequest(url: url)
         request.httpMethod = method.rawValue
         print("\n\n\(request.debugDescription)\n\n")
@@ -77,8 +88,6 @@ class BackendProvider {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         do {
-            //                            let test = "[{\"id\":1,\"name\":\"Test\",\"description\":\"Test\", \"avatar_url\":\"test\"}]"
-            //                            let dataTest = test.data(using: String.Encoding.utf8)
             let object = try decoder.decode(T.self, from: data)
             print("success")
             success(object)

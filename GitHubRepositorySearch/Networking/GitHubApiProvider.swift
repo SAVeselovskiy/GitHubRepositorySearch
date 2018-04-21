@@ -16,7 +16,7 @@ struct GithubSearchResult: Decodable {
     let items: [GithubRepository]
 }
 
-struct ReposytoryOwner: Decodable {
+struct RepositoryOwner: Decodable {
     let id: Int
     let avatarUrl: String?
 }
@@ -25,13 +25,15 @@ struct GithubRepository: Decodable {
     let id: Int
     let name: String
     let description: String?
-    let owner: ReposytoryOwner
+    let owner: RepositoryOwner
 }
 
 class GitHubApiProvider {
-    private lazy var backendProvider: BackendProvider = {
-        return BackendProvider()
-    }()
+    private let provider: ServerProvider
+    
+    init(provider: ServerProvider = BackendProvider()) {
+        self.provider = provider 
+    }
     
     func loadSearchResults(for searchRequest: String,
                            success: @escaping(RepositorySearchSuccessClosure),
@@ -45,8 +47,9 @@ class GitHubApiProvider {
                 processedSearchRequest += "+\(String(component))"
             }
         }
-        let query = "/search/repositories?q=\(processedSearchRequest)"
-        backendProvider.executeRecuest(query: query,
+        let path = "/search/repositories"
+        let queryItem = URLQueryItem(name: "q", value: "\(processedSearchRequest)")
+        provider.executeRecuest(path: path, queryItems: [queryItem],
                                        method: .GET,
                                        success: success,
                                        failure: failure)

@@ -10,7 +10,6 @@ import UIKit
 
 extension UIImage {
     func resizedImage(newSize: CGSize) -> UIImage? {
-        // Guard newSize is different
         guard self.size != newSize else { return self }
         
         UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0);

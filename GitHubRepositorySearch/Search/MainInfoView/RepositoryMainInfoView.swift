@@ -37,16 +37,22 @@ class RepositoryMainInfoView: UIView {
             ])
     }
     
-    func fill(with model: RepositorySearchCellModel, keywords: [String] = []) {
-        titleLabel.setText(model.repository.name, keywords: keywords)//.text = repository.name
-        descriptionLabel.setText(model.repository.description, keywords: keywords)//text = repository.description
+    func fill(with model: RepositorySearchCellModel, highlightWords: Bool) {
+        if highlightWords {
+            titleLabel.setText(model.repository.name, keywords: model.keywords)
+            descriptionLabel.setText(model.repository.description, keywords: model.keywords)
+        } else {
+            titleLabel.setText(model.repository.name, keywords: [])
+            descriptionLabel.setText(model.repository.description, keywords: [])
+        }
+        
         avatarImageView.image = #imageLiteral(resourceName: "user_placeholder")
         if let avatarImage = model.avatar {
             avatarImageView.image = avatarImage
         }
         else {
             if let avatarUrlString = model.repository.owner.avatarUrl, let avatarUrl = URL(string: avatarUrlString) {
-                avatarImageView.downloadImage(url: avatarUrl) { (image) in
+                avatarImageView.downloadImage(url: avatarUrl, rounded: true) { (image) in
                     model.avatar = image
                 }
             }
