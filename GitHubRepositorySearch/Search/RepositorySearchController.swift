@@ -16,7 +16,8 @@ protocol RepositorySearchModelProtocol: class {
 
 class RepositorySearchController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var searchBar: VSSearchBar!
+    
     
     var cellsModels: [RepositorySearchCellModel] = []
     
@@ -47,8 +48,15 @@ class RepositorySearchController: UIViewController {
             self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
         }
         
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Clear", comment: ""), style: .done, target: self, action: #selector(clearState))
     }
 
+    @objc func clearState() {
+        self.searchBar.text = ""
+        self.cellsModels.removeAll()
+        self.tableView.reloadData()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -66,10 +74,16 @@ class RepositorySearchController: UIViewController {
     @objc func search() {
         searchBar.resignFirstResponder()
         if let searchQuery = searchBar.text, searchQuery != ""{
+            searchBar.showActivityIndicator(true)
             model.search(query: searchQuery, success: { [weak self](repositories) in
-                self?.cellsModels = RepositorySearchCellModel.parse(repositories: repositories)
+                self?.searchBar.showActivityIndicator(false)
+                let keywords = searchQuery.split(separator: " ").compactMap({ (substring) -> String in
+                    return String(substring)
+                })
+                self?.cellsModels = RepositorySearchCellModel.parse(repositories: repositories, keywords: keywords)
                 self?.tableView.reloadData()
             }) { [weak self] (error) in
+                self?.searchBar.showActivityIndicator(false)
                 let alert = UIAlertController(title: NSLocalizedString("Error", comment: ""), message: error?.localizedDescription, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
                 self?.present(alert, animated: true, completion: nil)
@@ -101,16 +115,18 @@ extension RepositorySearchController: UITableViewDataSource {
 extension RepositorySearchController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DetailInfoViewController")
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 0.01
     }
 }
 
 //MARK: - SearchBar Delegate
-extension RepositorySearchController: UISearchBarDelegate {
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        search()
-    }
-    
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+extension RepositorySearchController: VSSearchBarDelegate {
+    func searchBarDidChange(text: String?) {
         if let timer = searchTimer, timer.isValid {
             timer.invalidate()
         }
@@ -120,5 +136,9 @@ extension RepositorySearchController: UISearchBarDelegate {
                                            selector: #selector(search),
                                            userInfo: nil,
                                            repeats: false)
+    }
+    
+    func didTapSearchButton() {
+        search()
     }
 }

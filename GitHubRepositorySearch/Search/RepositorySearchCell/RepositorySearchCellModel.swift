@@ -35,12 +35,10 @@ class RepositorySearchCellModel {
             cell.repositoryView?.avatarImageView.image = avatarImage
         }
         else {
-            DispatchQueue.global(qos: .background).async { [weak self] in
-                if let avatarUrlString = self?.repository.owner.avatarUrl, let avatarUrl = URL(string: avatarUrlString) {
+                if let avatarUrlString = self.repository.owner.avatarUrl, let avatarUrl = URL(string: avatarUrlString) {
                     cell.repositoryView?.avatarImageView.downloadImage(url: avatarUrl, completion: { (image) in
-                        self?.avatar = image
+                        self.avatar = image
                     })
-                }
             }
         }
     }

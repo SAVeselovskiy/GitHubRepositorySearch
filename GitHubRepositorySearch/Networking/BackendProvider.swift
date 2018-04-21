@@ -31,7 +31,6 @@ class BackendProvider {
     
     init(_ hostName: String? = BackendProvider.defaultHost) {
         self.hostName = hostName ?? BackendProvider.defaultHost
-        session = URLSession.shared
     }
     
     func executeRecuest<T: Decodable>(query: String, method: HttpMethod,

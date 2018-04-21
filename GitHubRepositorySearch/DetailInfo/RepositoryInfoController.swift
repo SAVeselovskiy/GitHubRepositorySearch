@@ -9,11 +9,23 @@
 import UIKit
 
 class RepositoryInfoController: UIViewController {
-
+    @IBOutlet weak var infoView: RepositoryMainInfoView!
+    var repositoryInfo: GithubRepository?
+    var mainInfoModel: RepositorySearchCellModel?
+    
+    static func instantiateInfoController(with repoInfo: GithubRepository, mainInfoModel: RepositorySearchCellModel) {
+        let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DetailInfoViewController")
+        if let repositoryController = controller as? RepositoryInfoController {
+            repositoryController.repositoryInfo = repoInfo
+            repositoryController.mainInfoModel = mainInfoModel
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        infoView.layer.cornerRadius = 8.0
         // Do any additional setup after loading the view.
+        
     }
 
     override func didReceiveMemoryWarning() {

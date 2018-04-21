@@ -22,7 +22,9 @@ class DownloadImageView: UIImageView {
                 completion(loadedImage)
             }
         })
-        self.loadOperation?.start()
+        DispatchQueue.global(qos: .background).async { [weak self] in
+            self?.loadOperation?.start()
+        }
     }
 }
 

@@ -36,42 +36,40 @@ class RepositorySearchCell: UITableViewCell {
     }
     
     func commonInit() {
-        let view = Bundle.main.loadNibNamed("RepositoryMainInfoView", owner: nil, options: nil)?[0] as? UIView
-        if let repositoryView = view as? RepositoryMainInfoView{
-            repositoryView.translatesAutoresizingMaskIntoConstraints = false
-            contentView.addSubview(repositoryView)
-            contentView.addConstraints([
-                NSLayoutConstraint(item: contentView,
-                                   attribute: .top,
-                                   relatedBy: .equal,
-                                   toItem: repositoryView,
-                                   attribute: .top,
-                                   multiplier: 1.0,
-                                   constant: 0.0),
-                NSLayoutConstraint(item: contentView,
-                                   attribute: .left,
-                                   relatedBy: .equal,
-                                   toItem: repositoryView,
-                                   attribute: .left,
-                                   multiplier: 1.0,
-                                   constant: 0.0),
-                NSLayoutConstraint(item: contentView,
-                                   attribute: .bottom,
-                                   relatedBy: .equal,
-                                   toItem: repositoryView,
-                                   attribute: .bottom,
-                                   multiplier: 1.0,
-                                   constant: 0.0),
-                NSLayoutConstraint(item: contentView,
-                                   attribute: .right,
-                                   relatedBy: .equal,
-                                   toItem: repositoryView,
-                                   attribute: .right,
-                                   multiplier: 1.0,
-                                   constant: 0.0)
-                ])
-            self.repositoryView = repositoryView
-        }
+        let repositoryView = RepositoryMainInfoView(frame: self.bounds)
+        repositoryView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(repositoryView)
+        contentView.addConstraints([
+            NSLayoutConstraint(item: contentView,
+                               attribute: .top,
+                               relatedBy: .equal,
+                               toItem: repositoryView,
+                               attribute: .top,
+                               multiplier: 1.0,
+                               constant: 0.0),
+            NSLayoutConstraint(item: contentView,
+                               attribute: .left,
+                               relatedBy: .equal,
+                               toItem: repositoryView,
+                               attribute: .left,
+                               multiplier: 1.0,
+                               constant: 0.0),
+            NSLayoutConstraint(item: contentView,
+                               attribute: .bottom,
+                               relatedBy: .equal,
+                               toItem: repositoryView,
+                               attribute: .bottom,
+                               multiplier: 1.0,
+                               constant: 0.0),
+            NSLayoutConstraint(item: contentView,
+                               attribute: .right,
+                               relatedBy: .equal,
+                               toItem: repositoryView,
+                               attribute: .right,
+                               multiplier: 1.0,
+                               constant: 0.0)
+            ])
+        self.repositoryView = repositoryView
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

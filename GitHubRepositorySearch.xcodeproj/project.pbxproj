@@ -27,6 +27,13 @@
 		E56DA71B2087E1DA00C27E0F /* RepositorySearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56DA7192087E1DA00C27E0F /* RepositorySearchController.swift */; };
 		E56DA7212087E36E00C27E0F /* RepositorySearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56DA7202087E36E00C27E0F /* RepositorySearchModel.swift */; };
 		E56DA7222087E36E00C27E0F /* RepositorySearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56DA7202087E36E00C27E0F /* RepositorySearchModel.swift */; };
+		E5DBF73E208A31D200C510F4 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DBF73D208A31D200C510F4 /* UIImageExtension.swift */; };
+		E5DBF740208A336200C510F4 /* VSSearchBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5DBF73F208A336200C510F4 /* VSSearchBar.xib */; };
+		E5DBF742208A34C400C510F4 /* VSSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DBF741208A34C400C510F4 /* VSSearchBar.swift */; };
+		E5DBF744208A3DE300C510F4 /* RepositorySearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DBF743208A3DE300C510F4 /* RepositorySearchView.swift */; };
+		E5DBF746208B50EE00C510F4 /* UIImageView+ImageDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DBF745208B50EE00C510F4 /* UIImageView+ImageDownload.swift */; };
+		E5DBF748208B894800C510F4 /* SelectKeywordLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DBF747208B894800C510F4 /* SelectKeywordLabel.swift */; };
+		E5DBF74F208BB50000C510F4 /* RepositoryInfoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DBF74E208BB50000C510F4 /* RepositoryInfoController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +67,13 @@
 		E56DA7172087C30800C27E0F /* SearchResponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = SearchResponse.json; sourceTree = "<group>"; };
 		E56DA7192087E1DA00C27E0F /* RepositorySearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositorySearchController.swift; sourceTree = "<group>"; };
 		E56DA7202087E36E00C27E0F /* RepositorySearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositorySearchModel.swift; sourceTree = "<group>"; };
+		E5DBF73D208A31D200C510F4 /* UIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
+		E5DBF73F208A336200C510F4 /* VSSearchBar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VSSearchBar.xib; sourceTree = "<group>"; };
+		E5DBF741208A34C400C510F4 /* VSSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VSSearchBar.swift; sourceTree = "<group>"; };
+		E5DBF743208A3DE300C510F4 /* RepositorySearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositorySearchView.swift; sourceTree = "<group>"; };
+		E5DBF745208B50EE00C510F4 /* UIImageView+ImageDownload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+ImageDownload.swift"; sourceTree = "<group>"; };
+		E5DBF747208B894800C510F4 /* SelectKeywordLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectKeywordLabel.swift; sourceTree = "<group>"; };
+		E5DBF74E208BB50000C510F4 /* RepositoryInfoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryInfoController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +115,8 @@
 		E52F0C43208500E10094DAB3 /* GitHubRepositorySearch */ = {
 			isa = PBXGroup;
 			children = (
+				E5DBF750208BB50D00C510F4 /* DetailInfo */,
+				E5DBF73C208A31B900C510F4 /* SupportingFiles */,
 				E52F0C44208500E10094DAB3 /* AppDelegate.swift */,
 				E52F0C48208500E10094DAB3 /* Main.storyboard */,
 				E52F0C4E208500E30094DAB3 /* Assets.xcassets */,
@@ -129,10 +145,11 @@
 			children = (
 				E56DA7192087E1DA00C27E0F /* RepositorySearchController.swift */,
 				E56DA7202087E36E00C27E0F /* RepositorySearchModel.swift */,
-				E52DA80F2088F3CB00783BA8 /* RepositoryMainInfoView.xib */,
-				E52DA8112088FA0D00783BA8 /* RepositorySearchCell.swift */,
-				E52DA8132088FBC900783BA8 /* RepositoryMainInfoView.swift */,
-				E52DA8152089298D00783BA8 /* RepositorySearchCellModel.swift */,
+				E5DBF74B208BB3EE00C510F4 /* MainInfoView */,
+				E5DBF74C208BB3FF00C510F4 /* RepositorySearchCell */,
+				E5DBF749208BB3CC00C510F4 /* SearchBar */,
+				E5DBF743208A3DE300C510F4 /* RepositorySearchView.swift */,
+				E5DBF74A208BB3DE00C510F4 /* UIKit support */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -144,6 +161,58 @@
 				E56B45C2208735FE00FE53A1 /* GitHubApiProvider.swift */,
 			);
 			path = Networking;
+			sourceTree = "<group>";
+		};
+		E5DBF73C208A31B900C510F4 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				E5DBF73D208A31D200C510F4 /* UIImageExtension.swift */,
+			);
+			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		E5DBF749208BB3CC00C510F4 /* SearchBar */ = {
+			isa = PBXGroup;
+			children = (
+				E5DBF73F208A336200C510F4 /* VSSearchBar.xib */,
+				E5DBF741208A34C400C510F4 /* VSSearchBar.swift */,
+			);
+			path = SearchBar;
+			sourceTree = "<group>";
+		};
+		E5DBF74A208BB3DE00C510F4 /* UIKit support */ = {
+			isa = PBXGroup;
+			children = (
+				E5DBF745208B50EE00C510F4 /* UIImageView+ImageDownload.swift */,
+				E5DBF747208B894800C510F4 /* SelectKeywordLabel.swift */,
+			);
+			path = "UIKit support";
+			sourceTree = "<group>";
+		};
+		E5DBF74B208BB3EE00C510F4 /* MainInfoView */ = {
+			isa = PBXGroup;
+			children = (
+				E52DA80F2088F3CB00783BA8 /* RepositoryMainInfoView.xib */,
+				E52DA8132088FBC900783BA8 /* RepositoryMainInfoView.swift */,
+			);
+			path = MainInfoView;
+			sourceTree = "<group>";
+		};
+		E5DBF74C208BB3FF00C510F4 /* RepositorySearchCell */ = {
+			isa = PBXGroup;
+			children = (
+				E52DA8112088FA0D00783BA8 /* RepositorySearchCell.swift */,
+				E52DA8152089298D00783BA8 /* RepositorySearchCellModel.swift */,
+			);
+			path = RepositorySearchCell;
+			sourceTree = "<group>";
+		};
+		E5DBF750208BB50D00C510F4 /* DetailInfo */ = {
+			isa = PBXGroup;
+			children = (
+				E5DBF74E208BB50000C510F4 /* RepositoryInfoController.swift */,
+			);
+			path = DetailInfo;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -229,6 +298,7 @@
 			files = (
 				E52F0C52208500E30094DAB3 /* LaunchScreen.storyboard in Resources */,
 				E52F0C4F208500E30094DAB3 /* Assets.xcassets in Resources */,
+				E5DBF740208A336200C510F4 /* VSSearchBar.xib in Resources */,
 				E52F0C4A208500E10094DAB3 /* Main.storyboard in Resources */,
 				E52DA8102088F3CB00783BA8 /* RepositoryMainInfoView.xib in Resources */,
 			);
@@ -249,14 +319,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5DBF742208A34C400C510F4 /* VSSearchBar.swift in Sources */,
 				E56DA71A2087E1DA00C27E0F /* RepositorySearchController.swift in Sources */,
+				E5DBF744208A3DE300C510F4 /* RepositorySearchView.swift in Sources */,
 				E56B45C3208735FE00FE53A1 /* GitHubApiProvider.swift in Sources */,
 				E56DA7212087E36E00C27E0F /* RepositorySearchModel.swift in Sources */,
+				E5DBF746208B50EE00C510F4 /* UIImageView+ImageDownload.swift in Sources */,
+				E5DBF73E208A31D200C510F4 /* UIImageExtension.swift in Sources */,
 				E52DA8142088FBC900783BA8 /* RepositoryMainInfoView.swift in Sources */,
+				E5DBF748208B894800C510F4 /* SelectKeywordLabel.swift in Sources */,
 				E52DA8162089298D00783BA8 /* RepositorySearchCellModel.swift in Sources */,
 				E52DA8122088FA0D00783BA8 /* RepositorySearchCell.swift in Sources */,
 				E52F0C4D208500E10094DAB3 /* GitHubRepositorySearch.xcdatamodeld in Sources */,
 				E52F0C45208500E10094DAB3 /* AppDelegate.swift in Sources */,
+				E5DBF74F208BB50000C510F4 /* RepositoryInfoController.swift in Sources */,
 				E56B45C12085DDDB00FE53A1 /* BackendProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
