@@ -130,11 +130,7 @@ class GithubApiParsingTest: XCTestCase {
         gitgubProvider?.loadSearchResults(for: "Tag Cloud iOS", success: { (results) in
             expectation.fulfill()
         }, failure: { (error) in
-            var loadingError = error
-            if error == nil {
-                loadingError = NSError(domain: "VSSearchList", code: 500, userInfo: nil)
-            }
-            print(loadingError?.localizedDescription as Any)
+            print(error?.localizedDescription ?? "")
             expectation.fulfill()
             XCTFail()
         })
@@ -147,11 +143,7 @@ class GithubApiParsingTest: XCTestCase {
                 
             }
             provider?.decodeJSON(data: body, success: successBlock, failure: { (error) in
-                var loadingError = error
-                if error == nil {
-                    loadingError = NSError(domain: "VSSearchList", code: 500, userInfo: nil)
-                }
-                print(loadingError?.localizedDescription as Any)
+                print(error?.localizedDescription ?? "")
                 XCTFail()
             })
         }

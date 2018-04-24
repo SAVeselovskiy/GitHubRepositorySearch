@@ -50,8 +50,14 @@ class RepositorySearchController: UIViewController {
         }
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Clear", comment: ""), style: .done, target: self, action: #selector(clearState))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Toggles", comment: ""), style: .done, target: self, action: #selector(openToggles))
     }
 
+    @objc func openToggles() {
+        let controller = TogglesListController()
+        self.navigationController?.pushViewController(controller, animated: true)
+    }
+    
     @objc func clearState() {
         self.searchBar.text = ""
         self.cellsModels.removeAll()
@@ -72,7 +78,7 @@ class RepositorySearchController: UIViewController {
         }
     }
     
-    @objc func search() {
+    @objc private func search() {
         
         if let searchQuery = searchBar.text, searchQuery != ""{
             searchBar.showActivityIndicator(true)
@@ -134,7 +140,7 @@ extension RepositorySearchController: VSSearchBarDelegate {
         if let timer = searchTimer, timer.isValid {
             timer.invalidate()
         }
-        //TODO: check performance, cause it uses on current run loop
+
         searchTimer = Timer.scheduledTimer(timeInterval: 0.7,
                                            target: self,
                                            selector: #selector(search),

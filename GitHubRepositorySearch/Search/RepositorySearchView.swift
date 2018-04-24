@@ -30,7 +30,7 @@ class RepositorySearchView: UIView {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
     }
     
     func commonInit() {
@@ -44,7 +44,7 @@ class RepositorySearchView: UIView {
         self.addSubview(searchBar)
         self.addConstraints([
             NSLayoutConstraint(item: self, attribute: .left, relatedBy: .equal, toItem: searchBar, attribute: .left, multiplier: 1.0, constant: 0.0),
-            NSLayoutConstraint(item: self, attribute: .top, relatedBy: .equal, toItem: searchBar, attribute: .top, multiplier: 1.0, constant: 0.0), //???
+            NSLayoutConstraint(item: self, attribute: .top, relatedBy: .equal, toItem: searchBar, attribute: .top, multiplier: 1.0, constant: 0.0),
             NSLayoutConstraint(item: self, attribute: .right, relatedBy: .equal, toItem: searchBar, attribute: .right, multiplier: 1.0, constant: 0.0)
             ])
         

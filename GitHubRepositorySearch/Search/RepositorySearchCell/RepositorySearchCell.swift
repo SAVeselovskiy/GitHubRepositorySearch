@@ -33,7 +33,7 @@ class RepositorySearchCell: UITableViewCell {
         commonInit()
     }
     
-    func commonInit() {
+    private func commonInit() {
         let repositoryView = RepositoryMainInfoView(frame: self.bounds)
         repositoryView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(repositoryView)

@@ -44,8 +44,6 @@ class RepositoryInfoController: UIViewController {
         loadTagCloud()
         loadReadme()
         
-        // Do any additional setup after loading the view.
-        
     }
     
     func loadReadme() {
@@ -57,7 +55,7 @@ class RepositoryInfoController: UIViewController {
             }, failure: { [weak self](error) in
                 self?.readmeLabel.showActivityIndicator(false)
                 if let loadError = error as NSError? {
-                    if loadError.code != -999 { //canceled
+                    if loadError.code != NSURLErrorCancelled { //canceled
                         self?.readmeLabel.showReloadView { [weak self] in
                             self?.loadReadme()
                         }
@@ -75,7 +73,7 @@ class RepositoryInfoController: UIViewController {
             }, failure: { [weak self](error) in
                 self?.tagCloudLabel.showActivityIndicator(false)
                 if let loadError = error as NSError? {
-                    if loadError.code != -999 { //canceled
+                    if loadError.code != NSURLErrorCancelled { //canceled
                         self?.tagCloudLabel.showReloadView { [weak self] in
                             self?.loadTagCloud()
                         }

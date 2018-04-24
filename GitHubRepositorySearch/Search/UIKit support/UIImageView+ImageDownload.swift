@@ -9,7 +9,7 @@
 import UIKit
 
 class DownloadImageView: UIImageView {
-    var loadOperation: Operation?
+    private var loadOperation: Operation?
     static let imageSize = 50.0
     
     func stopOperation() {

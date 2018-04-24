@@ -16,38 +16,7 @@ class LabelWithLoadingIndicator: UIView {
     var heightConstraint: NSLayoutConstraint!
     
     private lazy var reloadView: UIView = {
-        let mainView = UIView(frame: self.bounds)
-        mainView.translatesAutoresizingMaskIntoConstraints = false
-        
-        let reloadLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        reloadLabel.text = NSLocalizedString("Error", comment: "")
-        reloadLabel.textColor = UIColor.darkText
-        reloadLabel.translatesAutoresizingMaskIntoConstraints = false
-        reloadLabel.backgroundColor = UIColor.clear
-        mainView.addSubview(reloadLabel)
-        mainView.addConstraints([
-            NSLayoutConstraint(item: mainView, attribute: .top, relatedBy: .equal, toItem: reloadLabel, attribute: .top, multiplier: 1.0, constant: 0.0),
-            NSLayoutConstraint(item: mainView, attribute: .bottom, relatedBy: .equal, toItem: reloadLabel, attribute: .bottom, multiplier: 1.0, constant: 0.0),
-            NSLayoutConstraint(item: mainView, attribute: .left, relatedBy: .equal, toItem: reloadLabel, attribute: .left, multiplier: 1.0, constant: 0.0)
-            ])
-        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = #imageLiteral(resourceName: "ic_reload")
-        imageView.backgroundColor = UIColor.clear
-        mainView.addSubview(imageView)
-        imageView.addConstraints([
-            NSLayoutConstraint(item: imageView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25.0),
-            NSLayoutConstraint(item: imageView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25.0)
-            ])
-        mainView.addConstraints([
-            NSLayoutConstraint(item: mainView, attribute: .centerY, relatedBy: .equal, toItem: imageView, attribute: .centerY, multiplier: 1.0, constant: 0.0),
-            NSLayoutConstraint(item: mainView, attribute: .right, relatedBy: .equal, toItem: imageView, attribute: .right, multiplier: 1.0, constant: 0.0)
-            ])
-        mainView.addConstraint(NSLayoutConstraint(item: reloadLabel, attribute: .right, relatedBy: .equal, toItem: imageView, attribute: .left, multiplier: 1.0, constant: -10.0))
-        imageView.contentMode = .scaleAspectFit
-        imageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        imageView.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
-        return mainView
+        return createFailLoadingView()
     }()
     
     var reloadBlock: (() -> ())?
@@ -146,4 +115,41 @@ class LabelWithLoadingIndicator: UIView {
     }
     */
 
+}
+
+extension LabelWithLoadingIndicator {
+    func createFailLoadingView() -> UIView {
+        let mainView = UIView(frame: self.bounds)
+        mainView.translatesAutoresizingMaskIntoConstraints = false
+        
+        let reloadLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        reloadLabel.text = NSLocalizedString("Error", comment: "")
+        reloadLabel.textColor = UIColor.darkText
+        reloadLabel.translatesAutoresizingMaskIntoConstraints = false
+        reloadLabel.backgroundColor = UIColor.clear
+        mainView.addSubview(reloadLabel)
+        mainView.addConstraints([
+            NSLayoutConstraint(item: mainView, attribute: .top, relatedBy: .equal, toItem: reloadLabel, attribute: .top, multiplier: 1.0, constant: 0.0),
+            NSLayoutConstraint(item: mainView, attribute: .bottom, relatedBy: .equal, toItem: reloadLabel, attribute: .bottom, multiplier: 1.0, constant: 0.0),
+            NSLayoutConstraint(item: mainView, attribute: .left, relatedBy: .equal, toItem: reloadLabel, attribute: .left, multiplier: 1.0, constant: 0.0)
+            ])
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = #imageLiteral(resourceName: "ic_reload")
+        imageView.backgroundColor = UIColor.clear
+        mainView.addSubview(imageView)
+        imageView.addConstraints([
+            NSLayoutConstraint(item: imageView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25.0),
+            NSLayoutConstraint(item: imageView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25.0)
+            ])
+        mainView.addConstraints([
+            NSLayoutConstraint(item: mainView, attribute: .centerY, relatedBy: .equal, toItem: imageView, attribute: .centerY, multiplier: 1.0, constant: 0.0),
+            NSLayoutConstraint(item: mainView, attribute: .right, relatedBy: .equal, toItem: imageView, attribute: .right, multiplier: 1.0, constant: 0.0)
+            ])
+        mainView.addConstraint(NSLayoutConstraint(item: reloadLabel, attribute: .right, relatedBy: .equal, toItem: imageView, attribute: .left, multiplier: 1.0, constant: -10.0))
+        imageView.contentMode = .scaleAspectFit
+        imageView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        imageView.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        return mainView
+    }
 }

@@ -15,6 +15,30 @@ enum HttpMethod: String {
     case DELETE = "Delete"
 }
 
+enum RequestError: Int {
+    case incorrectResponseData = -103
+    case incorrectURLAddress = -101
+    case randomError = -1
+    
+    static func error(with code: RequestError) -> NSError {
+        switch code {
+        case .incorrectURLAddress:
+            return NSError(domain: "VSNetworkDomain",
+                           code: RequestError.incorrectURLAddress.rawValue,
+                           userInfo: [NSLocalizedDescriptionKey : NSLocalizedString("Incorrect URL address",
+                                                                                    comment: "")])
+        case .incorrectResponseData:
+            return NSError(domain: "VSNetworkDomain",
+                           code: RequestError.incorrectResponseData.rawValue,
+                           userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Incorrect response data", comment: "")])
+        case .randomError:
+            return NSError(domain: "VSNetworkDomain",
+                           code: RequestError.randomError.rawValue,
+                           userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Random generated error", comment: "")])
+        }
+    }
+}
+
 protocol ServerProvider {
     init(_ hostName: String?)
     func executeObjectRequest<T: Decodable>(path: String, queryItems: [URLQueryItem], method: HttpMethod,
@@ -61,7 +85,7 @@ class BackendProvider: ServerProvider {
                     if let dictionaryJSON = jsonObject as? [String: Any] {
                         success(dictionaryJSON)
                     } else {
-                        failure(NSError(domain: "VSNetworkDomain", code: -103, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Incorrect response data", comment: "")]) as Error)
+                        failure(RequestError.error(with: .incorrectResponseData))
                     }
                 } catch {
                     failure(error)
@@ -81,13 +105,18 @@ class BackendProvider: ServerProvider {
         urlComponents?.path = path
         urlComponents?.queryItems = queryItems
         guard let url = urlComponents?.url else {
-            let clientError = NSError(domain: "VSNetworkDomain",
-                                      code: -101,
-                                      userInfo: [NSLocalizedDescriptionKey : NSLocalizedString("Incorrect URL address",
-                                                                                               comment: "")])
+            let clientError = RequestError.error(with: .incorrectURLAddress)
             failure(clientError)
             return
         }
+        let needRandomError = UserDefaults.standard.bool(forKey: FeatureToggles.errorGenerator.toggleKey())
+        if  needRandomError {
+            if let randomError = generateError(oneOf: 2) {
+                failure(randomError)
+                return
+            }
+        }
+        
         
         var request = URLRequest(url: url)
         request.httpMethod = method.rawValue
@@ -113,12 +142,15 @@ class BackendProvider: ServerProvider {
                     success(data, httpResponse)
                 }
             } else {
-                failure(NSError(domain: "VSNetworkDomain", code: -103, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Incorrect response data", comment: "")]) as Error)
+                failure(RequestError.error(with: .incorrectResponseData) as Error)
             }
         }
         task.resume()
     }
-    
+
+}
+
+extension BackendProvider {
     func decodeJSON<T: Decodable>(data: Data, success: @escaping((T)->()),
                                   failure: @escaping((Error?)->())) {
         let decoder = JSONDecoder()
@@ -133,11 +165,21 @@ class BackendProvider: ServerProvider {
     }
     
     
-    func handleServerError(response: URLResponse?, completion: (Error?)->()) {
+    private func handleServerError(response: URLResponse?, completion: (Error?)->()) {
         let httpResponse = response as? HTTPURLResponse
         let statusCode = httpResponse?.statusCode ?? 500
         let serverError = NSError(domain: "VSBackendDomain", code: statusCode, userInfo: [NSLocalizedDescriptionKey : HTTPURLResponse.localizedString(forStatusCode: statusCode)])
         completion(serverError as Error)
     }
+}
 
+extension BackendProvider {
+    func generateError(oneOf attempts: Int) -> Error? {
+        let random = Int(arc4random_uniform(100))
+        if random % attempts != 0 {
+            return RequestError.error(with: .randomError)
+        }
+        
+        return nil
+    }
 }

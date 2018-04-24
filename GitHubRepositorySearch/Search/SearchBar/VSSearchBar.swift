@@ -73,7 +73,7 @@ class VSSearchBar: UIView {
         }
     }
     
-    @objc func didPressButton() {
+    @objc private func didPressButton() {
         self.delegate?.didTapSearchButton()
     }
     

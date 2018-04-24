@@ -25,7 +25,7 @@ class RepositoryMainInfoView: UIView {
         commonInit()
     }
     
-    func commonInit() {
+    private func commonInit() {
         Bundle.main.loadNibNamed("RepositoryMainInfoView", owner: self, options: nil)
         self.addSubview(contentView)
         contentView.translatesAutoresizingMaskIntoConstraints = false

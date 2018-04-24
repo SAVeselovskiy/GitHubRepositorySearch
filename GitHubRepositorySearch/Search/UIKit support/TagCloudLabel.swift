@@ -10,7 +10,6 @@ import UIKit
 
 extension Array
 {
-    /** Randomizes the order of an array's elements. */
     mutating func shuffle()
     {
         for _ in 0..<10
@@ -58,7 +57,7 @@ class TagCloudLabel: UILabel {
     }
     */
     
-    func font(for weight: Double) -> UIFont {
+    private func font(for weight: Double) -> UIFont {
         if weight < 0.2 {
             return UIFont.systemFont(ofSize: 15.0)
         } else if weight < 0.4 {
