@@ -17,13 +17,15 @@ class DownloadImageView: UIImageView {
     }
     
     func downloadImage(url: URL, rounded: Bool, completion: @escaping (UIImage?) -> ()){
-        self.loadOperation = ImageDownloadOperation(url: url, completion: { (loadedImage, error) in
+        self.loadOperation = ImageDownloadOperation(url: url, completion: { (loadedImage, error, isCanceled) in
             var resultImage = loadedImage
             if rounded {
                resultImage = loadedImage?.roundedImage(cornerRadius: DownloadImageView.imageSize/2)
             }
             DispatchQueue.main.async { [weak self] in
-                self?.image = resultImage
+                if !isCanceled {
+                    self?.image = resultImage
+                }
                 completion(resultImage)
             }
         })
@@ -42,10 +44,10 @@ class ImageDownloadOperation: Operation {
     }
     
     let imageUrl: URL
-    let completion: (UIImage?, Error?)->()
+    let completion: (UIImage?, Error?, Bool)->()
     var currentState: VSOperationState
     
-    init(url: URL, completion: @escaping (UIImage?, Error?) -> ()) {
+    init(url: URL, completion: @escaping (UIImage?, Error?, Bool) -> ()) {
         currentState = .ready
         imageUrl = url
         self.completion = completion
@@ -60,9 +62,9 @@ class ImageDownloadOperation: Operation {
                 let image = UIImage(data: data)
                 let resizedAvatar = image?.resizedImage(newSize: CGSize(width: DownloadImageView.imageSize,
                                                                         height: DownloadImageView.imageSize))
-                completion(resizedAvatar, nil)
+                completion(resizedAvatar, nil, isCancelled)
             } catch {
-                completion(nil, error)
+                completion(nil, error, isCancelled)
             }
         }
     }

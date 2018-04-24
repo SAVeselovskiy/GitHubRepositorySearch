@@ -9,9 +9,12 @@
 import Foundation
 
 class RepositrySearchModel: RepositorySearchModelProtocol {
-
+    
+    var repositoriesInfo: [GithubRepository] = []
+    
     func search(query: String, success: @escaping (([GithubRepository]) -> ()), failure: @escaping ((Error?) -> ())) {
-        provider.loadSearchResults(for: query, success: { (result) in
+        provider.loadSearchResults(for: query, success: { [weak self](result) in
+            self?.repositoriesInfo = result.items
             success(result.items)
         }) { (error) in
             failure(error)

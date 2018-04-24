@@ -15,16 +15,17 @@ enum HttpMethod: String {
     case DELETE = "Delete"
 }
 
-protocol Parsable {
-    init()
-    func parse(_ map: [String: Any])
-}
-
 protocol ServerProvider {
     init(_ hostName: String?)
-    func executeRecuest<T: Decodable>(path: String, queryItems: [URLQueryItem], method: HttpMethod,
+    func executeObjectRequest<T: Decodable>(path: String, queryItems: [URLQueryItem], method: HttpMethod,
                                       success: @escaping((T)->()),
                                       failure: @escaping((Error?)->()))
+    
+    func executeJSONRequest(path: String, queryItems: [URLQueryItem], method: HttpMethod,
+                            success: @escaping(([String: Any])->()),
+                            failure: @escaping((Error?)->()))
+    
+    func cancelAllTasks()
 }
 
 class BackendProvider: ServerProvider {
@@ -32,7 +33,7 @@ class BackendProvider: ServerProvider {
     let hostName: String
     private lazy var session: URLSession = {
         let configuration = URLSessionConfiguration.default
-        configuration.waitsForConnectivity = true
+        configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
         return URLSession(configuration: configuration)
     }()
     
@@ -40,8 +41,41 @@ class BackendProvider: ServerProvider {
         self.hostName = hostName ?? BackendProvider.defaultHost
     }
     
-    func executeRecuest<T: Decodable>(path: String, queryItems: [URLQueryItem], method: HttpMethod,
+    func executeObjectRequest<T: Decodable>(path: String, queryItems: [URLQueryItem], method: HttpMethod,
                         success: @escaping((T)->()),
+                        failure: @escaping((Error?)->())) {
+        self.executeRequest(path: path, queryItems: queryItems, method: method, success: { [weak self](data, httpResponse) in
+            if let mimeType = httpResponse.mimeType, mimeType == "application/json" {
+                self?.decodeJSON(data: data, success: success, failure: failure)
+            }
+        }, failure: failure)
+    }
+    
+    func executeJSONRequest(path: String, queryItems: [URLQueryItem], method: HttpMethod,
+                            success: @escaping(([String: Any])->()),
+        failure: @escaping((Error?)->())) {
+        self.executeRequest(path: path, queryItems: queryItems, method: method, success: { (data, httpResponse) in
+            if let mimeType = httpResponse.mimeType, mimeType == "application/json" {
+                do {
+                    let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
+                    if let dictionaryJSON = jsonObject as? [String: Any] {
+                        success(dictionaryJSON)
+                    } else {
+                        failure(NSError(domain: "VSNetworkDomain", code: -103, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Incorrect response data", comment: "")]) as Error)
+                    }
+                } catch {
+                    failure(error)
+                }
+            }
+            }, failure: failure)
+    }
+    
+    func cancelAllTasks() {
+        session.invalidateAndCancel()
+    }
+    
+    private func executeRequest(path: String, queryItems: [URLQueryItem], method: HttpMethod,
+                        success: @escaping((Data, HTTPURLResponse)->()),
                         failure: @escaping((Error?)->())) {
         var urlComponents = URLComponents(string: self.hostName)
         urlComponents?.path = path
@@ -58,6 +92,7 @@ class BackendProvider: ServerProvider {
         var request = URLRequest(url: url)
         request.httpMethod = method.rawValue
         print("\n\n\(request.debugDescription)\n\n")
+
         let task = session.dataTask(with: request) { [weak self](data, response, error) in
             if let response = response {
                 print("\n\n\(response.debugDescription)\n\n")
@@ -73,11 +108,12 @@ class BackendProvider: ServerProvider {
                     self?.handleServerError(response: response, completion: failure)
                     return
             }
-            if let mimeType = httpResponse.mimeType, mimeType == "application/json",
-                let data = data {
-                    DispatchQueue.main.async { [weak self] in
-                        self?.decodeJSON(data: data, success: success, failure: failure)
-                    }
+            if let data = data {
+                DispatchQueue.main.async {
+                    success(data, httpResponse)
+                }
+            } else {
+                failure(NSError(domain: "VSNetworkDomain", code: -103, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Incorrect response data", comment: "")]) as Error)
             }
         }
         task.resume()

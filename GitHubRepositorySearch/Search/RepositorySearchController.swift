@@ -11,7 +11,8 @@ import UIKit
 protocol RepositorySearchModelProtocol: class {
     func search(query: String,
                 success: @escaping(([GithubRepository]) -> ()),
-                failure: @escaping(RepositorySearchFailClosure))
+                failure: @escaping(RepositoryFailClosure))
+    var repositoriesInfo: [GithubRepository]{get}
 }
 
 class RepositorySearchController: UIViewController {
@@ -72,7 +73,7 @@ class RepositorySearchController: UIViewController {
     }
     
     @objc func search() {
-        searchBar.resignFirstResponder()
+        
         if let searchQuery = searchBar.text, searchQuery != ""{
             searchBar.showActivityIndicator(true)
             model.search(query: searchQuery, success: { [weak self](repositories) in
@@ -86,6 +87,9 @@ class RepositorySearchController: UIViewController {
                 self?.searchBar.showActivityIndicator(false)
                 let alert = UIAlertController(title: NSLocalizedString("Error", comment: ""), message: error?.localizedDescription, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                alert.addAction(UIAlertAction(title: NSLocalizedString("Reload", comment: ""), style: .default, handler: { [weak self](action) in
+                    self?.search()
+                }))
                 self?.present(alert, animated: true, completion: nil)
             }
         }
@@ -114,7 +118,8 @@ extension RepositorySearchController: UITableViewDataSource {
 extension RepositorySearchController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let controller = RepositoryInfoController.instantiateInfoController(with: nil, mainInfoModel: cellsModels[indexPath.row])
+        let controller = RepositoryInfoController.instantiateInfoController(with: model.repositoriesInfo[indexPath.row],
+                                                                            mainInfoModel: cellsModels[indexPath.row])
         self.navigationController?.pushViewController(controller, animated: true)
     }
     
@@ -138,6 +143,7 @@ extension RepositorySearchController: VSSearchBarDelegate {
     }
     
     func didTapSearchButton() {
+        _ = searchBar.resignFirstResponder()
         search()
     }
 }

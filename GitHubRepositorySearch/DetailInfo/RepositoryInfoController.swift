@@ -10,8 +10,17 @@ import UIKit
 
 class RepositoryInfoController: UIViewController {
     @IBOutlet weak var infoView: RepositoryMainInfoView!
+
+    @IBOutlet weak var readmeLabel: LabelWithLoadingIndicator!
+    @IBOutlet weak var tagCloudLabel: LabelWithLoadingIndicator!
+    
+    
+
     var repositoryInfo: GithubRepository?
     var mainInfoModel: RepositorySearchCellModel?
+    lazy var model: RepositoryInfoModelProtocol = {
+       return RepositoryInfoModel()
+    }()
     
     static func instantiateInfoController(with repoInfo: GithubRepository?, mainInfoModel: RepositorySearchCellModel?) -> UIViewController {
         let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DetailInfoViewController")
@@ -25,11 +34,60 @@ class RepositoryInfoController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         infoView.layer.cornerRadius = 8.0
+        readmeLabel.layer.cornerRadius = 8.0
+        tagCloudLabel.layer.cornerRadius = 8.0
+        
         if let infoModel = mainInfoModel {
             infoView.fill(with: infoModel, highlightWords: false)
         }
+        
+        loadTagCloud()
+        loadReadme()
+        
         // Do any additional setup after loading the view.
         
+    }
+    
+    func loadReadme() {
+        guard let repoInfo = repositoryInfo else {return}
+        readmeLabel.showActivityIndicator(true)
+        model.loadReadme(for: repoInfo, success: { [weak self](readme) in
+            self?.readmeLabel.text = readme.content
+            self?.readmeLabel.showActivityIndicator(false)
+            }, failure: { [weak self](error) in
+                self?.readmeLabel.showActivityIndicator(false)
+                if let loadError = error as NSError? {
+                    if loadError.code != -999 { //canceled
+                        self?.readmeLabel.showReloadView { [weak self] in
+                            self?.loadReadme()
+                        }
+                    }
+                }
+        })
+    }
+    
+    func loadTagCloud() {
+        guard let repoInfo = repositoryInfo else {return}
+        tagCloudLabel.showActivityIndicator(true)
+        model.loadLanguages(for: repoInfo, success: { [weak self](list) in
+            self?.tagCloudLabel.showActivityIndicator(false)
+            self?.tagCloudLabel.setTextObject(list.languages)
+            }, failure: { [weak self](error) in
+                self?.tagCloudLabel.showActivityIndicator(false)
+                if let loadError = error as NSError? {
+                    if loadError.code != -999 { //canceled
+                        self?.tagCloudLabel.showReloadView { [weak self] in
+                            self?.loadTagCloud()
+                        }
+                    }
+                }
+        })
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        self.readmeLabel.resizeLabel(for: size.width) //dirty hacks
+        self.tagCloudLabel.resizeLabel(for: size.width)
     }
 
     override func didReceiveMemoryWarning() {
@@ -37,6 +95,9 @@ class RepositoryInfoController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    deinit {
+        model.cancelOperations()
+    }
 
     /*
     // MARK: - Navigation

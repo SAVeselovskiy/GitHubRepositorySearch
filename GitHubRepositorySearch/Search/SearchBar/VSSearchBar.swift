@@ -15,7 +15,7 @@ protocol VSSearchBarDelegate: class {
 
 class VSSearchBar: UIView {
     weak var delegate: VSSearchBarDelegate?
-    @IBOutlet private weak var textField: UITextField!
+    @IBOutlet var textField: UITextField!
     @IBOutlet var contentView: UIView!
     
     
@@ -48,6 +48,11 @@ class VSSearchBar: UIView {
         textField.delegate = self
         searchButton.addTarget(self, action: #selector(didPressButton), for: .touchUpInside)
         searchButton.setTitle(NSLocalizedString("Search", comment: ""), for: .normal)
+    }
+    
+    override func resignFirstResponder() -> Bool {
+        self.endEditing(true)
+        return super.resignFirstResponder() && self.textField.resignFirstResponder()
     }
     
     override func awakeFromNib() {

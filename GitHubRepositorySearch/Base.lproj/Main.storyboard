@@ -90,29 +90,73 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dfC-JJ-2Av" customClass="RepositoryMainInfoView" customModule="GitHubRepositorySearch" customModuleProvider="target">
-                                <rect key="frame" x="8" y="28" width="359" height="80"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qkz-UU-PRl">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <subviews>
+                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dfC-JJ-2Av" customClass="RepositoryMainInfoView" customModule="GitHubRepositorySearch" customModuleProvider="target">
+                                        <rect key="frame" x="8" y="14" width="359" height="80"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" priority="250" constant="80" placeholder="YES" id="8z6-9p-Tgz"/>
+                                        </constraints>
+                                    </view>
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hhv-Px-VOp">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="1"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="0c1-9t-g72"/>
+                                        </constraints>
+                                    </view>
+                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dLn-Nr-7tJ" customClass="LabelWithLoadingIndicator" customModule="GitHubRepositorySearch" customModuleProvider="target">
+                                        <rect key="frame" x="8" y="126" width="359" height="16"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="16" placeholder="YES" id="8HG-vL-nCS"/>
+                                        </constraints>
+                                    </view>
+                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OER-MV-4VR" customClass="LabelWithLoadingIndicator" customModule="GitHubRepositorySearch" customModuleProvider="target">
+                                        <rect key="frame" x="8" y="102" width="359" height="16"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="16" placeholder="YES" id="eXC-1A-Bgg"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" priority="750" constant="80" id="8z6-9p-Tgz"/>
+                                    <constraint firstAttribute="trailing" secondItem="hhv-Px-VOp" secondAttribute="trailing" id="4Ft-E6-uEn"/>
+                                    <constraint firstItem="hhv-Px-VOp" firstAttribute="leading" secondItem="qkz-UU-PRl" secondAttribute="leading" id="Bvh-IP-T4B"/>
+                                    <constraint firstAttribute="trailing" secondItem="OER-MV-4VR" secondAttribute="trailing" constant="8" id="DMg-De-VxG"/>
+                                    <constraint firstAttribute="trailing" secondItem="dfC-JJ-2Av" secondAttribute="trailing" constant="8" id="FOe-ap-BSG"/>
+                                    <constraint firstAttribute="bottom" secondItem="dLn-Nr-7tJ" secondAttribute="bottom" constant="8" id="LxH-ao-GKp"/>
+                                    <constraint firstItem="dLn-Nr-7tJ" firstAttribute="top" secondItem="OER-MV-4VR" secondAttribute="bottom" constant="8" id="TyA-eQ-gte"/>
+                                    <constraint firstItem="OER-MV-4VR" firstAttribute="leading" secondItem="qkz-UU-PRl" secondAttribute="leading" constant="8" id="ZLZ-aV-hup"/>
+                                    <constraint firstAttribute="trailing" secondItem="dLn-Nr-7tJ" secondAttribute="trailing" constant="8" id="aBJ-Jq-JTu"/>
+                                    <constraint firstItem="OER-MV-4VR" firstAttribute="top" secondItem="dfC-JJ-2Av" secondAttribute="bottom" constant="8" id="bzF-Pq-bnZ"/>
+                                    <constraint firstItem="hhv-Px-VOp" firstAttribute="top" secondItem="qkz-UU-PRl" secondAttribute="top" id="dK9-TI-z5d"/>
+                                    <constraint firstItem="dfC-JJ-2Av" firstAttribute="leading" secondItem="qkz-UU-PRl" secondAttribute="leading" constant="8" id="kvZ-eR-TXN"/>
+                                    <constraint firstItem="dLn-Nr-7tJ" firstAttribute="leading" secondItem="qkz-UU-PRl" secondAttribute="leading" constant="8" id="nRF-Rs-mWY"/>
+                                    <constraint firstItem="dfC-JJ-2Av" firstAttribute="top" secondItem="qkz-UU-PRl" secondAttribute="top" constant="14" id="rf2-ZW-zFE"/>
                                 </constraints>
-                            </view>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="dfC-JJ-2Av" firstAttribute="top" secondItem="9yv-VN-FfL" secondAttribute="top" constant="8" id="5Xv-Xm-4fT"/>
-                            <constraint firstItem="9yv-VN-FfL" firstAttribute="trailing" secondItem="dfC-JJ-2Av" secondAttribute="trailing" constant="8" id="CeA-cK-sSL"/>
-                            <constraint firstItem="dfC-JJ-2Av" firstAttribute="leading" secondItem="9yv-VN-FfL" secondAttribute="leading" constant="8" id="P7f-vt-gsr"/>
+                            <constraint firstItem="qkz-UU-PRl" firstAttribute="trailing" secondItem="9yv-VN-FfL" secondAttribute="trailing" id="FWR-wN-gT7"/>
+                            <constraint firstItem="qkz-UU-PRl" firstAttribute="bottom" secondItem="9yv-VN-FfL" secondAttribute="bottom" id="Oax-aC-pdS"/>
+                            <constraint firstItem="qkz-UU-PRl" firstAttribute="leading" secondItem="9yv-VN-FfL" secondAttribute="leading" id="QNs-Gg-CRO"/>
+                            <constraint firstItem="hhv-Px-VOp" firstAttribute="width" secondItem="qv6-tL-sfK" secondAttribute="width" id="T7p-nA-yRp"/>
+                            <constraint firstItem="qkz-UU-PRl" firstAttribute="top" secondItem="9yv-VN-FfL" secondAttribute="top" id="zHA-q9-uYI"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="9yv-VN-FfL"/>
                     </view>
                     <connections>
                         <outlet property="infoView" destination="dfC-JJ-2Av" id="nYw-yE-se2"/>
+                        <outlet property="readmeLabel" destination="dLn-Nr-7tJ" id="HNj-tB-Ail"/>
+                        <outlet property="tagCloudLabel" destination="OER-MV-4VR" id="IXj-I6-NRf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vJi-wG-RrO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="264" y="-366"/>
+            <point key="canvasLocation" x="262.5" y="-367.5"/>
         </scene>
     </scenes>
 </document>
