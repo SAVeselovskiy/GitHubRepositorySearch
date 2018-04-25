@@ -19,8 +19,6 @@
 		E56B45C12085DDDB00FE53A1 /* BackendProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56B45C02085DDDB00FE53A1 /* BackendProvider.swift */; };
 		E56B45C3208735FE00FE53A1 /* GitHubApiProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56B45C2208735FE00FE53A1 /* GitHubApiProvider.swift */; };
 		E56DA7142087BDDB00C27E0F /* GithubApiParsingTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56DA7132087BDDB00C27E0F /* GithubApiParsingTest.swift */; };
-		E56DA7152087BDE100C27E0F /* BackendProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56B45C02085DDDB00FE53A1 /* BackendProvider.swift */; };
-		E56DA7162087BDE300C27E0F /* GitHubApiProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56B45C2208735FE00FE53A1 /* GitHubApiProvider.swift */; };
 		E56DA71A2087E1DA00C27E0F /* RepositorySearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56DA7192087E1DA00C27E0F /* RepositorySearchController.swift */; };
 		E56DA7212087E36E00C27E0F /* RepositorySearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56DA7202087E36E00C27E0F /* RepositorySearchModel.swift */; };
 		E5DBF73E208A31D200C510F4 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DBF73D208A31D200C510F4 /* UIImageExtension.swift */; };
@@ -37,6 +35,11 @@
 		E5E6A686208E408A000909B9 /* LabelWithLoadingIndicator.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5E6A685208E408A000909B9 /* LabelWithLoadingIndicator.xib */; };
 		E5E6A688208E41D8000909B9 /* LabelWithLoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E6A687208E41D8000909B9 /* LabelWithLoadingIndicator.swift */; };
 		E5E6A6AA208FD7D5000909B9 /* TogglesListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E6A6A9208FD7D5000909B9 /* TogglesListController.swift */; };
+		E5E6A6AB20906AA0000909B9 /* BackendProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56B45C02085DDDB00FE53A1 /* BackendProvider.swift */; };
+		E5E6A6AC20906AAD000909B9 /* TogglesListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E6A6A9208FD7D5000909B9 /* TogglesListController.swift */; };
+		E5E6A6AD20906AD4000909B9 /* GitHubApiProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56B45C2208735FE00FE53A1 /* GitHubApiProvider.swift */; };
+		E5E6A6AE20906AE7000909B9 /* StringEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E6A67B208CEE09000909B9 /* StringEncoding.swift */; };
+		E5E6A6AF20906AF6000909B9 /* TagCloudLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E6A680208D40FB000909B9 /* TagCloudLabel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -375,10 +378,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5E6A6AD20906AD4000909B9 /* GitHubApiProvider.swift in Sources */,
 				E5E6A67A208CDEC3000909B9 /* GithubReadmeParser.swift in Sources */,
 				E56DA7142087BDDB00C27E0F /* GithubApiParsingTest.swift in Sources */,
-				E56DA7162087BDE300C27E0F /* GitHubApiProvider.swift in Sources */,
-				E56DA7152087BDE100C27E0F /* BackendProvider.swift in Sources */,
+				E5E6A6AF20906AF6000909B9 /* TagCloudLabel.swift in Sources */,
+				E5E6A6AE20906AE7000909B9 /* StringEncoding.swift in Sources */,
+				E5E6A6AB20906AA0000909B9 /* BackendProvider.swift in Sources */,
+				E5E6A6AC20906AAD000909B9 /* TogglesListController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

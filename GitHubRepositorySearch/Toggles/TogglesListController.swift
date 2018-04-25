@@ -78,7 +78,6 @@ class TogglesListController: UIViewController {
     
     @objc func switchDidChange(switcher: UISwitch) {
         guard let toggle = FeatureToggles(rawValue: switcher.tag) else { return }
-        let test = switcher.isOn
         UserDefaults.standard.set(switcher.isOn, forKey: toggle.toggleKey())
     }
 

@@ -82,6 +82,7 @@ class LabelWithLoadingIndicator: UIView {
         self.addConstraint(heightConstraint)
     }
     
+    //Должен вызываться при изменении текста и размеров супервью для анимирования изменений размеров UILabel. Неудобно.
     func resizeLabel(for width: CGFloat? = nil) {
         var labelWidth = label.bounds.width
         if let viewWidth = width {
